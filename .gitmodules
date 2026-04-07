@@ -1,0 +1,3 @@
+[submodule "vendor/context-mode"]
+	path = vendor/context-mode
+	url = https://github.com/mksglu/context-mode.git

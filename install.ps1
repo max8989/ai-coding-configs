@@ -179,6 +179,27 @@ foreach ($item in @("agent", "command", "context", "skill", "tool", "opencode.js
     }
 }
 
+# context-mode skills (from vendor submodule → ~/.opencode/skill/)
+$CtxSkillsDir = Join-Path $ScriptDir "vendor\context-mode\skills"
+if (Test-Path $CtxSkillsDir) {
+    foreach ($skillDir in Get-ChildItem -Directory $CtxSkillsDir) {
+        $dst = Join-Path $OpenCodeDir "skill\$($skillDir.Name)"
+        if ((Test-Path $dst) -and -not (Get-Item $dst).Attributes.HasFlag([IO.FileAttributes]::ReparsePoint)) {
+            Write-Warn "Backing up $dst → ${dst}.bak"
+            Rename-Item $dst "${dst}.bak" -Force
+        }
+        try {
+            New-Item -ItemType SymbolicLink -Path $dst -Target $skillDir.FullName -Force | Out-Null
+            Write-Info "Linked context-mode skill: $($skillDir.Name)"
+        } catch {
+            Copy-Item $skillDir.FullName $dst -Recurse -Force
+            Write-Info "Copied context-mode skill: $($skillDir.Name)"
+        }
+    }
+} else {
+    Write-Warn "vendor/context-mode not found — run: git submodule update --init --recursive"
+}
+
 # Install OpenCode plugins
 Write-Info "Installing OpenCode plugins..."
 Push-Location $OpenCodeDir

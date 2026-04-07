@@ -218,6 +218,23 @@ setup_symlinks() {
         fi
     done
 
+    # context-mode skills (from vendor submodule → ~/.opencode/skill/)
+    if [[ -d "$SCRIPT_DIR/vendor/context-mode/skills" ]]; then
+        for skill_dir in "$SCRIPT_DIR/vendor/context-mode/skills"/*/; do
+            local skill_name
+            skill_name="$(basename "$skill_dir")"
+            local dst="$HOME/.opencode/skill/$skill_name"
+            if [[ -e "$dst" && ! -L "$dst" ]]; then
+                warn "Backing up existing $dst → ${dst}.bak"
+                mv "$dst" "${dst}.bak"
+            fi
+            ln -sf "$skill_dir" "$dst"
+            info "Linked context-mode skill: $skill_name"
+        done
+    else
+        warn "vendor/context-mode not found — run: git submodule update --init --recursive"
+    fi
+
     # Install OpenCode node dependencies
     if [[ -f "$HOME/.opencode/package.json" ]]; then
         info "Installing OpenCode plugins..."
