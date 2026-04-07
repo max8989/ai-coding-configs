@@ -107,45 +107,6 @@ install_prerequisites() {
 }
 
 # ---------------------------------------------------------------------------
-# 2. Claude Code CLI
-# ---------------------------------------------------------------------------
-install_claude_code() {
-    heading "Claude Code CLI"
-
-    if command -v claude &>/dev/null; then
-        info "Claude Code already installed: $(claude --version 2>/dev/null || echo 'unknown')"
-    else
-        warn "Installing Claude Code CLI via npm..."
-        npm install -g @anthropic-ai/claude-code
-    fi
-}
-
-# ---------------------------------------------------------------------------
-# 3. OpenCode
-# ---------------------------------------------------------------------------
-install_opencode() {
-    heading "OpenCode"
-
-    if command -v opencode &>/dev/null; then
-        info "OpenCode already installed: $(opencode --version 2>/dev/null || echo 'unknown')"
-    else
-        warn "Installing OpenCode..."
-        if [[ "$OS" == "arch" ]]; then
-            # AUR or direct install
-            if command -v yay &>/dev/null; then
-                yay -S --noconfirm opencode-bin 2>/dev/null || npm install -g opencode
-            else
-                npm install -g opencode
-            fi
-        elif [[ "$OS" == "macos" ]]; then
-            brew install opencode-ai/tap/opencode 2>/dev/null || npm install -g opencode
-        else
-            npm install -g opencode
-        fi
-    fi
-}
-
-# ---------------------------------------------------------------------------
 # 4. MCP Server Dependencies
 # ---------------------------------------------------------------------------
 install_mcp_deps() {
@@ -276,8 +237,6 @@ main() {
 
     detect_os
     install_prerequisites
-    install_claude_code
-    install_opencode
     install_mcp_deps
     setup_symlinks
     print_env_reminder

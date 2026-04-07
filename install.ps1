@@ -73,30 +73,6 @@ if (Test-Command "uv") {
 }
 
 # ---------------------------------------------------------------------------
-# 2. Claude Code CLI
-# ---------------------------------------------------------------------------
-Write-Heading "Claude Code CLI"
-
-if (Test-Command "claude") {
-    Write-Info "Claude Code already installed"
-} else {
-    Write-Warn "Installing Claude Code CLI..."
-    npm install -g @anthropic-ai/claude-code
-}
-
-# ---------------------------------------------------------------------------
-# 3. OpenCode
-# ---------------------------------------------------------------------------
-Write-Heading "OpenCode"
-
-if (Test-Command "opencode") {
-    Write-Info "OpenCode already installed"
-} else {
-    Write-Warn "Installing OpenCode..."
-    npm install -g opencode
-}
-
-# ---------------------------------------------------------------------------
 # 4. MCP Server Dependencies
 # ---------------------------------------------------------------------------
 Write-Heading "MCP Server Dependencies"
