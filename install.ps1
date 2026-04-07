@@ -129,7 +129,7 @@ $ClaudeDir = "$env:USERPROFILE\.claude"
 if (-not (Test-Path $ClaudeDir)) { New-Item -ItemType Directory -Path $ClaudeDir | Out-Null }
 
 foreach ($file in @("CLAUDE.md", "settings.json")) {
-    $src = Join-Path $ScriptDir "claude-config\$file"
+    $src = Join-Path $ScriptDir "claude\$file"
     $dst = Join-Path $ClaudeDir $file
     if (Test-Path $src) {
         if ((Test-Path $dst) -and -not (Get-Item $dst).Attributes.HasFlag([IO.FileAttributes]::ReparsePoint)) {
@@ -153,7 +153,7 @@ $OpenCodeDir = "$env:USERPROFILE\.opencode"
 if (-not (Test-Path $OpenCodeDir)) { New-Item -ItemType Directory -Path $OpenCodeDir | Out-Null }
 
 foreach ($item in @("agent", "command", "context", "skill", "tool", "opencode.json", "package.json", "env.example")) {
-    $src = Join-Path $ScriptDir "opencode-config\$item"
+    $src = Join-Path $ScriptDir "opencode\$item"
     $dst = Join-Path $OpenCodeDir $item
     if (Test-Path $src) {
         if ((Test-Path $dst) -and -not (Get-Item $dst).Attributes.HasFlag([IO.FileAttributes]::ReparsePoint)) {
@@ -191,7 +191,7 @@ Pop-Location
 Write-Heading "Environment Variables"
 
 Write-Host "Copy the env template and fill in your keys:"
-Write-Host "  copy $ScriptDir\opencode-config\env.example $env:USERPROFILE\.opencode\.env"
+Write-Host "  copy $ScriptDir\opencode\env.example $env:USERPROFILE\.opencode\.env"
 Write-Host ""
 Write-Host "Required:"
 Write-Host "  CONTEXT7_API_KEY        — https://context7.com"

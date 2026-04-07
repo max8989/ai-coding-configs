@@ -191,7 +191,7 @@ setup_symlinks() {
     # Claude Code config
     mkdir -p "$HOME/.claude"
     for file in CLAUDE.md settings.json; do
-        local src="$SCRIPT_DIR/claude-config/$file"
+        local src="$SCRIPT_DIR/claude/$file"
         local dst="$HOME/.claude/$file"
         if [[ -f "$src" ]]; then
             if [[ -e "$dst" && ! -L "$dst" ]]; then
@@ -206,7 +206,7 @@ setup_symlinks() {
     # OpenCode config
     mkdir -p "$HOME/.opencode"
     for item in agent command context skill tool opencode.json package.json env.example; do
-        local src="$SCRIPT_DIR/opencode-config/$item"
+        local src="$SCRIPT_DIR/opencode/$item"
         local dst="$HOME/.opencode/$item"
         if [[ -e "$src" ]]; then
             if [[ -e "$dst" && ! -L "$dst" ]]; then
@@ -233,7 +233,7 @@ print_env_reminder() {
 
     echo "Copy the env.example and fill in your keys:"
     echo ""
-    echo "  cp $SCRIPT_DIR/opencode-config/env.example ~/.opencode/.env"
+    echo "  cp $SCRIPT_DIR/opencode/env.example ~/.opencode/.env"
     echo ""
     echo "Required variables:"
     echo "  CONTEXT7_API_KEY        — https://context7.com"
