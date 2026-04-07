@@ -1,0 +1,6 @@
+[submodule "claude-config"]
+	path = claude-config
+	url = git@github.com:max8989/claude-config.git
+[submodule "opencode-config"]
+	path = opencode-config
+	url = git@github.com:max8989/opencode-config.git
